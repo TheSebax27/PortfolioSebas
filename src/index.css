@@ -46,12 +46,14 @@
 
   /* Gradient text */
   .text-gradient {
+    color: #8B5CF6;
     background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #06B6D4 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .text-gradient-warm {
+    color: #F59E0B;
     background: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -185,16 +187,19 @@
   }
 }
 
-/* Noise overlay */
+/* Noise overlay — z-index must stay below content (z-index 0 w/ isolation) */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   pointer-events: none;
-  z-index: 9999;
-  opacity: 0.4;
+  z-index: 0;
+  opacity: 0.35;
 }
+
+/* Ensure page content always above noise overlay */
+nav, main, footer { position: relative; z-index: 1; }
 
 /* Grid pattern util */
 .grid-bg {
@@ -224,10 +229,15 @@ body::before {
 .float-delay { animation: float 4s ease-in-out 1.5s infinite; }
 .cursor-blink { animation: blink 1s step-end infinite; }
 .gradient-text-animated {
+  color: #8B5CF6; /* solid fallback — visible before CSS gradient kicks in */
   background: linear-gradient(270deg, #6366F1, #8B5CF6, #06B6D4, #6366F1);
   background-size: 300% 300%;
   animation: gradient-shift 4s ease infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+/* Firefox/no-webkit fallback */
+@supports not (-webkit-background-clip: text) {
+  .gradient-text-animated { color: #8B5CF6; background: none; }
 }
