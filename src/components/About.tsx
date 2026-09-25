@@ -1,6 +1,5 @@
-import { motion } from 'framer-motion'
-import CountUp from 'react-countup'
-import { useInView as useIOInView } from 'react-intersection-observer'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useInView } from 'framer-motion'
 import { FiCode, FiLayers, FiShield, FiDownload } from 'react-icons/fi'
 import { personalInfo, education, certifications } from '../data/portfolio'
 
@@ -17,15 +16,35 @@ const pillars = [
   { icon: FiShield, title: 'QA & Calidad', desc: 'Pruebas funcionales y de regresión en Rappi. Scrum. Reporte y seguimiento de bugs críticos.', color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20' },
 ]
 
+function useCounter(target: number, duration = 1800) {
+  const [count, setCount] = useState(0)
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true })
+
+  useEffect(() => {
+    if (!inView) return
+    let start = 0
+    const step = target / (duration / 16)
+    const timer = setInterval(() => {
+      start += step
+      if (start >= target) { setCount(target); clearInterval(timer) }
+      else setCount(Math.floor(start))
+    }, 16)
+    return () => clearInterval(timer)
+  }, [inView, target, duration])
+
+  return { ref, count }
+}
+
 function StatCard({ value, suffix, label, color, i }: { value: number; suffix: string; label: string; color: string; i: number }) {
-  const { ref, inView } = useIOInView({ triggerOnce: true, threshold: 0.5 })
+  const { ref, count } = useCounter(value)
   return (
     <motion.div ref={ref}
       initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       transition={{ delay: i * 0.1 }}
-      className="glass p-6 text-center group">
+      className="glass p-6 text-center">
       <div className={`text-4xl font-black mb-1 bg-gradient-to-br ${color} bg-clip-text text-transparent`}>
-        {inView ? <CountUp end={value} duration={2} suffix={suffix} /> : '0'}
+        {count}{suffix}
       </div>
       <p className="text-slate-400 text-sm leading-snug">{label}</p>
     </motion.div>
@@ -48,7 +67,6 @@ export default function About() {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-16">
-          {/* Left col */}
           <div className="space-y-8">
             <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
               className="text-slate-300 text-lg leading-relaxed">
@@ -59,17 +77,16 @@ export default function About() {
               className="text-slate-400 leading-relaxed">
               Mi proyecto personal más impactante: un{' '}
               <span className="text-white font-semibold">sistema de traducción de lengua de señas</span>{' '}
-              construido con Python, TensorFlow y visión por computadora — reconoce señas en tiempo real y las convierte a texto y audio.
+              con Python, TensorFlow y visión por computadora — reconoce señas en tiempo real y las convierte a texto y audio.
               Enfocado en <span className="text-cyan-400 font-semibold">accesibilidad e inclusión digital</span>.
             </motion.p>
 
-            {/* Pillars */}
             <div className="space-y-3 pt-2">
               {pillars.map((p, i) => (
                 <motion.div key={p.title}
                   initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }} transition={{ delay: 0.1 + i * 0.08 }}
-                  className="flex gap-4 items-start glass p-4 group">
+                  className="flex gap-4 items-start glass p-4">
                   <div className={`p-2.5 rounded-xl border ${p.color} shrink-0`}>
                     <p.icon size={18} />
                   </div>
@@ -90,14 +107,11 @@ export default function About() {
             </motion.div>
           </div>
 
-          {/* Right col */}
           <div className="space-y-6">
-            {/* Stats grid */}
             <div className="grid grid-cols-2 gap-4">
               {stats.map((s, i) => <StatCard key={s.label} {...s} i={i} />)}
             </div>
 
-            {/* Education */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
               className="glass p-6">
               <p className="font-mono text-xs text-slate-500 uppercase tracking-widest mb-4">// Educación</p>
@@ -112,7 +126,6 @@ export default function About() {
               ))}
             </motion.div>
 
-            {/* Certifications */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
               className="glass p-6">
               <p className="font-mono text-xs text-slate-500 uppercase tracking-widest mb-4">// Certificaciones</p>
