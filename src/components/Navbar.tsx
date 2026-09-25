@@ -1,61 +1,84 @@
 import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { personalInfo } from '../data/portfolio'
 
-const links = ['Sobre mí', 'Skills', 'Experiencia', 'Proyectos', 'Contacto']
-const hrefs = ['#about', '#skills', '#experience', '#projects', '#contact']
+const links = [
+  { label: 'Sobre mí', href: '#about' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Experiencia', href: '#experience' },
+  { label: 'Proyectos', href: '#projects' },
+  { label: 'Contacto', href: '#contact' },
+]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handler)
-    return () => window.removeEventListener('scroll', handler)
+    const h = () => setScrolled(window.scrollY > 30)
+    window.addEventListener('scroll', h)
+    return () => window.removeEventListener('scroll', h)
   }, [])
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-dark/90 backdrop-blur-md border-b border-border shadow-xl shadow-black/20' : 'bg-transparent'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-dark/80 backdrop-blur-2xl border-b border-white/5 shadow-2xl shadow-black/50' : 'bg-transparent'}`}>
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="#hero" className="font-mono text-accent font-semibold text-lg tracking-tight hover:text-indigo-400 transition-colors">
-          {personalInfo.shortName}
+        {/* Logo */}
+        <a href="#hero" className="flex items-center gap-2 group">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg group-hover:shadow-indigo-500/30 transition-shadow">
+            <span className="text-white font-black text-xs">JS</span>
+          </div>
+          <span className="font-mono font-bold text-white/90 text-sm tracking-tight group-hover:text-white transition-colors">
+            {personalInfo.shortName}
+          </span>
         </a>
 
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8">
-          {links.map((link, i) => (
-            <a key={link} href={hrefs[i]} className="text-sm text-slate-400 hover:text-white transition-colors duration-200 font-medium">
-              {link}
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center gap-1">
+          {links.map(link => (
+            <a key={link.label} href={link.href}
+              className="px-4 py-2 text-sm text-slate-400 hover:text-white font-medium transition-colors rounded-xl hover:bg-white/5">
+              {link.label}
             </a>
           ))}
-          <a href={`mailto:${personalInfo.email}`} className="btn-primary text-sm py-2 px-4">
-            Contrátame
-          </a>
         </div>
 
-        {/* Mobile hamburger */}
-        <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-slate-400 hover:text-white transition-colors">
-          <div className="w-6 flex flex-col gap-1.5">
-            <span className={`h-0.5 bg-current transition-all duration-200 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`h-0.5 bg-current transition-all duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`h-0.5 bg-current transition-all duration-200 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
-          </div>
-        </button>
+        {/* CTA + hamburger */}
+        <div className="flex items-center gap-3">
+          <a href={`mailto:${personalInfo.email}`}
+            className="hidden md:flex btn-primary py-2 px-5 text-sm">
+            Contrátame
+          </a>
+          <button onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors">
+            <div className="w-5 flex flex-col gap-1.5">
+              <span className={`h-0.5 bg-current transition-all duration-300 origin-center ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+              <span className={`h-0.5 bg-current transition-all duration-300 ${menuOpen ? 'opacity-0 scale-x-0' : ''}`} />
+              <span className={`h-0.5 bg-current transition-all duration-300 origin-center ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            </div>
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-surface border-t border-border px-6 py-4 flex flex-col gap-4">
-          {links.map((link, i) => (
-            <a key={link} href={hrefs[i]} onClick={() => setMenuOpen(false)} className="text-slate-300 hover:text-white font-medium transition-colors">
-              {link}
-            </a>
-          ))}
-          <a href={`mailto:${personalInfo.email}`} className="btn-primary text-sm text-center">
-            Contrátame
-          </a>
-        </div>
-      )}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
+            className="md:hidden border-t border-white/5 bg-dark/95 backdrop-blur-2xl overflow-hidden">
+            <div className="px-6 py-4 flex flex-col gap-1">
+              {links.map(link => (
+                <a key={link.label} href={link.href} onClick={() => setMenuOpen(false)}
+                  className="px-4 py-3 text-slate-300 hover:text-white font-medium rounded-xl hover:bg-white/5 transition-colors">
+                  {link.label}
+                </a>
+              ))}
+              <a href={`mailto:${personalInfo.email}`} className="btn-primary mt-2 justify-center">
+                Contrátame
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   )
 }
