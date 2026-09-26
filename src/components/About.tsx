@@ -124,8 +124,14 @@ export default function About() {
               className="glass p-6">
               <p className="font-mono text-xs text-slate-500 uppercase tracking-widest mb-4">// Educación</p>
               {education.map((e) => (
-                <div key={e.institution} className="flex gap-3 mb-4 last:mb-0">
-                  <div className="dot mt-1.5" />
+                <div key={e.institution} className="flex gap-3 mb-4 last:mb-0 items-start">
+                  {(e as any).logo ? (
+                    <div className="w-9 h-9 rounded-lg bg-white p-1 shrink-0 flex items-center justify-center">
+                      <img src={(e as any).logo} alt={e.institution} className="w-full h-full object-contain" />
+                    </div>
+                  ) : (
+                    <div className="dot mt-1.5" />
+                  )}
                   <div>
                     <p className="text-white font-semibold text-sm">{e.degree}</p>
                     <p className="text-slate-500 text-xs mt-0.5">{e.institution} · {e.period}</p>

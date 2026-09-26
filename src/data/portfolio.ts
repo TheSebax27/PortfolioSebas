@@ -141,11 +141,13 @@ export const testimonials = [
 export const education = [
   {
     institution: 'UNAD',
+    logo: '/assets/logo-unad.png',
     degree: 'Ingeniería de Sistemas',
     period: '2023 – 2027 (en curso)',
   },
   {
     institution: 'SENA',
+    logo: '/assets/logo-sena.png',
     degree: 'Tecnólogo en Análisis y Desarrollo de Software',
     period: '2023 – 2025',
   },
