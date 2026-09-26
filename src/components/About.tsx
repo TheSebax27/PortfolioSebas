@@ -4,10 +4,10 @@ import { FiCode, FiLayers, FiShield, FiMail } from 'react-icons/fi'
 import { personalInfo, education, certifications } from '../data/portfolio'
 
 const stats = [
-  { value: 15, suffix: '+', label: 'Proyectos entregados', color: 'from-orange-500 to-amber-400' },
-  { value: 2, suffix: '+', label: 'Años de experiencia', color: 'from-sky-500 to-blue-400' },
-  { value: 25, suffix: '+', label: 'Bugs críticos en Rappi', color: 'from-violet-500 to-pink-400' },
-  { value: 3, suffix: '', label: 'Empresas (Nova · Rappi · SIS)', color: 'from-emerald-500 to-teal-400' },
+  { value: 15, suffix: '+', label: 'Proyectos entregados', color: 'from-orange-400 to-amber-300' },
+  { value: 2, suffix: '+', label: 'Años de experiencia', color: 'from-sky-300 to-cyan-200' },
+  { value: 25, suffix: '+', label: 'Bugs críticos en Rappi', color: 'from-pink-400 to-rose-300' },
+  { value: 3, suffix: '', label: 'Empresas (Nova · Rappi · SIS)', color: 'from-emerald-400 to-teal-300' },
 ]
 
 const pillars = [
@@ -43,7 +43,8 @@ function StatCard({ value, suffix, label, color, i }: { value: number; suffix: s
       initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       transition={{ delay: i * 0.09 }}
       className="glass p-6 text-center">
-      <div className={`text-4xl font-black mb-1 bg-gradient-to-br ${color} bg-clip-text text-transparent`}>
+      <div className={`text-4xl font-black mb-1 bg-gradient-to-br ${color} bg-clip-text`}
+        style={{ WebkitTextFillColor: 'transparent', color: '#FBBF24' }}>
         {count}{suffix}
       </div>
       <p className="text-slate-400 text-sm leading-snug">{label}</p>

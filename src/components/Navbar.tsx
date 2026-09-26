@@ -37,7 +37,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-1">
           {links.map(link => (
             <a key={link.label} href={link.href}
-              className="px-4 py-2 text-sm text-slate-400 hover:text-white font-medium transition-colors rounded-xl hover:bg-white/5">
+              className="px-4 py-2 text-sm text-white/80 hover:text-white font-semibold transition-colors rounded-xl hover:bg-white/10 drop-shadow-sm">
               {link.label}
             </a>
           ))}
