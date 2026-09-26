@@ -1,15 +1,123 @@
 import { motion } from 'framer-motion'
+import { FiGlobe, FiSmartphone, FiPackage, FiShoppingCart, FiTruck, FiDroplet } from 'react-icons/fi'
 
-// Projects section — placeholder until project selection is finalized
+const companies = [
+  {
+    name: 'Soluciones Integrales en Sistemas',
+    logo: '/assets/logo-sis.png',
+    color: 'from-sky-500 to-blue-500',
+    glow: 'rgba(56,189,248,0.15)',
+    projects: [
+      {
+        name: 'VISIONS',
+        desc: 'Sistema de facturación empresarial usado en producción. Módulos de ventas, inventario, clientes y reportes. Integración con impresoras fiscales y servicios externos.',
+        tags: ['VB.NET', 'WinForms', 'SQL Server'],
+        icon: FiPackage,
+      },
+      {
+        name: 'NEXO ERP / CRM',
+        desc: 'ERP/CRM empresarial completo: gestión de inventario, facturación electrónica DIAN, módulo RRHH, integración con POS VISIONS y reportes avanzados.',
+        tags: ['C#', 'ASP.NET Core', 'Blazor', 'React', 'SQL Server'],
+        icon: FiGlobe,
+      },
+      {
+        name: 'TomaPedidos',
+        desc: 'Sistema web de toma de pedidos para restaurantes. Gestión de mesas, menú dinámico, pedidos en tiempo real e impresión en cocina.',
+        tags: ['ASP.NET Web Forms', 'SQL Server', 'JavaScript'],
+        icon: FiShoppingCart,
+      },
+      {
+        name: 'AutoPago',
+        desc: 'Kiosco de autopago estilo McDonald\'s. Flujo completo de selección de productos, carrito y pago integrado con datáfono físico.',
+        tags: ['ASP.NET Core', 'ADO.NET', 'TEFNET'],
+        icon: FiTruck,
+      },
+      {
+        name: 'ParkLink',
+        desc: 'App Android/iOS para gestión de parqueadero y autolavado. Registro de vehículos, cálculo de tarifas e impresión de tiquetes vía Bluetooth ESC/POS.',
+        tags: ['.NET MAUI', 'SQLite', 'Bluetooth ESC/POS'],
+        icon: FiDroplet,
+      },
+    ],
+  },
+  {
+    name: 'Rappi S.A.S',
+    logo: '/assets/logo-rappi.png',
+    color: 'from-orange-500 to-red-400',
+    glow: 'rgba(249,115,22,0.15)',
+    projects: [
+      {
+        name: 'Rappi Web — Colombia · Uruguay · México',
+        desc: 'QA sobre la plataforma web de Rappi en tres mercados. Identificación y reporte de bugs críticos en flujos de compra, pagos y experiencia de usuario.',
+        tags: ['QA', 'Web', 'Bug Tracking', 'Scrum'],
+        icon: FiGlobe,
+      },
+      {
+        name: 'Rappi App — Android & iOS',
+        desc: 'Pruebas funcionales y de regresión en la aplicación móvil. Cobertura de flujos de entrega, notificaciones, geolocalización y checkout.',
+        tags: ['QA', 'Android', 'iOS', 'Testing'],
+        icon: FiSmartphone,
+      },
+    ],
+  },
+]
+
 export default function Projects() {
   return (
-    <section id="projects" className="py-24 px-6 bg-surface/30">
+    <section id="projects" className="py-28 px-6 relative">
+      <div className="absolute left-1/2 top-1/3 -translate-x-1/2 w-[600px] h-[400px] rounded-full opacity-5 blur-[130px] pointer-events-none"
+        style={{ background: 'radial-gradient(circle, #F97316 0%, transparent 70%)' }} />
+
       <div className="max-w-6xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <p className="section-subtitle">Trabajo</p>
-          <h2 className="section-title">Proyectos</h2>
-          <p className="text-slate-500 mt-4 font-mono text-sm">// Próximamente — selección en progreso</p>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
+          <span className="label">// 04 · Proyectos</span>
+          <h2 className="h2">Trabajo real</h2>
+          <p className="text-slate-400 mt-3 max-w-xl">Proyectos en producción, no demos — sistemas que empresas reales usan hoy.</p>
         </motion.div>
+
+        <div className="space-y-16">
+          {companies.map((co, ci) => (
+            <motion.div key={co.name}
+              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ delay: ci * 0.1 }}>
+
+              {/* Company header */}
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-white p-1.5 shrink-0 flex items-center justify-center shadow-lg">
+                  <img src={co.logo} alt={co.name} className="w-full h-full object-contain" />
+                </div>
+                <div>
+                  <p className={`font-black text-lg bg-gradient-to-r ${co.color} bg-clip-text text-transparent`}>{co.name}</p>
+                  <p className="text-slate-500 text-xs font-mono">{co.projects.length} proyectos</p>
+                </div>
+                <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent ml-2" />
+              </div>
+
+              {/* Project cards */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {co.projects.map((p, pi) => (
+                  <motion.div key={p.name}
+                    initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ delay: ci * 0.1 + pi * 0.07 }}
+                    className="glass p-5 flex flex-col gap-3 group"
+                    style={{ '--glow': co.glow } as React.CSSProperties}>
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2.5 rounded-xl bg-gradient-to-br ${co.color} bg-opacity-10 shrink-0`}
+                        style={{ background: co.glow }}>
+                        <p.icon size={16} className="text-white" />
+                      </div>
+                      <h3 className="text-white font-bold text-sm leading-snug pt-0.5">{p.name}</h3>
+                    </div>
+                    <p className="text-slate-400 text-sm leading-relaxed flex-1">{p.desc}</p>
+                    <div className="flex flex-wrap gap-1.5 pt-2 border-t border-white/5">
+                      {p.tags.map(tag => <span key={tag} className="badge text-[11px] py-0.5 px-2.5">{tag}</span>)}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   )
