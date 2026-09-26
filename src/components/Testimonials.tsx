@@ -2,10 +2,8 @@ import { motion } from 'framer-motion'
 import { FiMessageSquare } from 'react-icons/fi'
 import { testimonials } from '../data/portfolio'
 
-const gradients = [
-  'from-indigo-500 to-violet-500',
-  'from-orange-500 to-red-500',
-]
+const companyLogos = ['/assets/logo-nova.png', '/assets/logo-rappi.png']
+const gradients = ['from-amber-500 to-yellow-400', 'from-orange-500 to-red-500']
 
 export default function Testimonials() {
   return (
@@ -38,8 +36,8 @@ export default function Testimonials() {
 
                 {/* Author */}
                 <div className="flex items-center gap-4 pt-4 border-t border-white/5">
-                  <div className={`w-11 h-11 rounded-full bg-gradient-to-br ${gradients[i]} flex items-center justify-center font-bold text-white text-sm shrink-0 shadow-lg`}>
-                    {t.name.split(' ').slice(0, 2).map(n => n[0]).join('')}
+                  <div className="w-11 h-11 rounded-full bg-white p-1.5 shrink-0 shadow-lg flex items-center justify-center">
+                    <img src={companyLogos[i]} alt={t.role} className="w-full h-full object-contain" />
                   </div>
                   <div>
                     <p className="text-white font-bold text-sm">{t.name}</p>
