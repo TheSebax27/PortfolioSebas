@@ -43,7 +43,7 @@ export default function Experience() {
                 </div>
 
                 {/* Card */}
-                <div className={`glass p-7 glow-border ${exp.current ? 'border-orange-500/25 shadow-lg shadow-orange-500/5' : ''}`}>
+                <div className={`glass p-7 ${exp.current ? 'border-orange-500/25 shadow-lg shadow-orange-500/5' : ''}`}>
                   {/* Header */}
                   <div className="flex flex-wrap items-start justify-between gap-3 mb-5">
                     <div className="flex items-start gap-4">

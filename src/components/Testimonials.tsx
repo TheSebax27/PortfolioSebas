@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FiMessageSquare } from 'react-icons/fi'
+
 import { testimonials } from '../data/portfolio'
 
 const companyLogos = ['/assets/logo-nova.png', '/assets/logo-rappi.png']
@@ -24,11 +24,6 @@ export default function Testimonials() {
               viewport={{ once: true }} transition={{ delay: i * 0.15 }}
               className="glow-border group">
               <div className="glass p-8 h-full flex flex-col gap-6 rounded-[20px]">
-                {/* Quote icon */}
-                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${gradients[i]} flex items-center justify-center shadow-lg`}>
-                  <FiMessageSquare size={18} className="text-white" />
-                </div>
-
                 {/* Quote */}
                 <blockquote className="text-slate-300 leading-relaxed text-base italic flex-1">
                   "{t.text}"
