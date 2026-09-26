@@ -4,12 +4,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        dark: '#070714',
-        surface: '#0D0D1A',
-        card: '#111128',
-        accent: '#6366F1',
-        violet: '#8B5CF6',
-        cyan: '#06B6D4',
+        dark: '#080C10',
+        surface: '#0D1117',
+        card: '#111820',
+        accent: '#F97316',
+        gold: '#FBBF24',
+        sky: '#38BDF8',
       },
       fontFamily: {
         mono: ['"JetBrains Mono"', 'monospace'],

@@ -23,6 +23,7 @@ export const experiences = [
   {
     role: 'Desarrollador Full Stack',
     company: 'Soluciones Integrales en Sistemas',
+    logo: '/assets/logo-sis.png',
     period: 'Junio 2026 – Actualidad',
     current: true,
     bullets: [
@@ -38,6 +39,7 @@ export const experiences = [
   {
     role: 'QA / Analista de Calidad de Software',
     company: 'Rappi S.A.S',
+    logo: '/assets/logo-rappi.png',
     period: 'Agosto 2025 – Febrero 2026',
     current: false,
     bullets: [
@@ -50,6 +52,7 @@ export const experiences = [
   {
     role: 'Desarrollador de Software',
     company: 'Nova',
+    logo: '/assets/logo-nova.png',
     period: 'Marzo 2024 – Julio 2025',
     current: false,
     bullets: [
