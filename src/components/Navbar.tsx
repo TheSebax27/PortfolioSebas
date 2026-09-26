@@ -25,8 +25,8 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <a href="#hero" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg group-hover:shadow-indigo-500/30 transition-shadow">
-            <span className="text-white font-black text-xs">JS</span>
+          <div className="w-8 h-8 rounded-xl overflow-hidden bg-white/5 border border-orange-500/20 group-hover:border-orange-500/50 transition-colors shadow-lg flex items-center justify-center">
+            <img src="/favicon.png" alt="Logo" className="w-6 h-6 object-contain" />
           </div>
           <span className="font-mono font-bold text-white/90 text-sm tracking-tight group-hover:text-white transition-colors">
             {personalInfo.shortName}
